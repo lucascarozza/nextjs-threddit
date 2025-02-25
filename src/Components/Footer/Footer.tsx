@@ -1,31 +1,30 @@
 import Link from "next/link";
 import { FaGithub, FaLock, FaQuestion, FaReddit } from "react-icons/fa";
+import { Button } from "../Button/Button";
 
 const Footer: React.FC = () => {
   return (
     <footer className="row-start-3 flex flex-col items-center justify-center gap-4 md:flex-row md:justify-between">
       <div className="inline-flex items-center justify-center gap-2 text-zinc-500">
         <Link href={"/help-center"}>
-          <button
-            type="button"
+          <Button.Root
             title="Help Center"
-            className="inline-flex h-10 items-center justify-center gap-2 px-4 py-2 bg-zinc-800 rounded-full transition-all hover:bg-gradient-to-t hover:from-pink-500 hover:to-yellow-500 hover:text-zinc-50 hover:scale-105 hover:cursor-pointer"
+            className="transition-all shadow-sm hover:scale-105"
             aria-label="Help Center"
           >
-            <FaQuestion aria-hidden="true" />{" "}
-            <span className="hidden sm:block">Help Center</span>
-          </button>
+            <Button.Icon icon={FaQuestion} />
+            <Button.Text className="hidden sm:block">Help Center</Button.Text>
+          </Button.Root>
         </Link>
         <Link href={"/privacy"}>
-          <button
-            type="button"
+          <Button.Root
             title="Privacy"
-            className="inline-flex h-10 items-center justify-center gap-2 px-4 py-2 bg-zinc-800 rounded-full transition-all hover:bg-gradient-to-t hover:from-pink-500 hover:to-yellow-500 hover:text-zinc-50 hover:scale-105 hover:cursor-pointer"
+            className="transition-all shadow-sm hover:scale-105"
             aria-label="Privacy"
           >
-            <FaLock aria-hidden="true" />
-            <span className="hidden sm:block">Privacy</span>
-          </button>
+            <Button.Icon icon={FaLock} />
+            <Button.Text className="hidden sm:block">Privacy</Button.Text>
+          </Button.Root>
         </Link>
 
         <a
@@ -33,15 +32,16 @@ const Footer: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <button
-            type="button"
+          <Button.Root
+            className="transition-all shadow-sm hover:scale-105"
             title="GitHub Repository"
-            className="inline-flex h-10 items-center justify-center gap-2 px-4 py-2 bg-zinc-800 rounded-full transition-all hover:bg-gradient-to-t hover:from-pink-500 hover:to-yellow-500 hover:text-zinc-50 hover:scale-105 hover:cursor-pointer"
             aria-label="GitHub Repository"
           >
-            <FaGithub aria-hidden="true" />
-            <span className="hidden sm:block">GitHub Repository</span>
-          </button>
+            <Button.Icon icon={FaGithub} />
+            <Button.Text className="hidden sm:block">
+              GitHub Repository
+            </Button.Text>
+          </Button.Root>
         </a>
       </div>
       <div className="flex flex-col items-center md:items-end w-auto text-zinc-600">

@@ -14,7 +14,6 @@ export const honk = Honk({
 export const metadata: Metadata = {
   title: "Threddit",
   description: "A new and fun way to use Reddit",
-  
 };
 
 export default function RootLayout({
