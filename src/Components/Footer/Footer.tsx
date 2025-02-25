@@ -35,7 +35,7 @@ const Footer: React.FC = () => {
           <Button.Root
             title="GitHub Repository"
             className="shadow-sm transition-all hover:scale-105"
-            aria-label="GitHub Repository"
+            aria-label="GitHub Repository (opens in new tab)"
           >
             <Button.Icon icon={FaGithub} />
             <Button.Text className="hidden sm:block">GitHub Repository</Button.Text>

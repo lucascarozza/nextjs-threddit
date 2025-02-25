@@ -2,10 +2,11 @@ import React from "react";
 import Image from "next/image";
 import Gordelicia from "@/assets/001.jpeg";
 import { FaHeart } from "react-icons/fa6";
+import Card from "@/components/Card/Card";
 
 const Post: React.FC = () => {
   return (
-    <div className="flex flex-col w-full md:w-196 min-h-32 p-6 gap-3 overflow-hidden bg-zinc-800 border-zinc-700 border-1 rounded-4xl shadow-sm cursor-default transition-all hover:scale-101">
+    <Card outerClassName="w-full md:w-196 min-h-32 cursor-default transition-all hover:scale-101" innerClassName="gap-3 p-6">
       {/* Post Header */}
       <div className="inline-flex items-center justify-between">
         <div className="inline-flex items-center gap-2">
@@ -67,7 +68,7 @@ const Post: React.FC = () => {
           className="h-72 w-auto rounded-lg hover:cursor-pointer"
         />
       </div>
-    </div>
+    </Card>
   );
 };
 
