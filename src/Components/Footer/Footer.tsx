@@ -4,12 +4,12 @@ import { Button } from "../Button/Button";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="row-start-3 flex flex-col items-center justify-center gap-4 md:flex-row md:justify-between">
+    <footer className="flex h-50 flex-col items-center justify-center gap-4 px-4 md:h-30 md:flex-row md:justify-between lg:px-20">
       <div className="inline-flex items-center justify-center gap-2 text-zinc-500">
         <Link href={"/help-center"}>
           <Button.Root
             title="Help Center"
-            className="transition-all shadow-sm hover:scale-105"
+            className="shadow-sm transition-all hover:scale-105"
             aria-label="Help Center"
           >
             <Button.Icon icon={FaQuestion} />
@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
         <Link href={"/privacy"}>
           <Button.Root
             title="Privacy"
-            className="transition-all shadow-sm hover:scale-105"
+            className="shadow-sm transition-all hover:scale-105"
             aria-label="Privacy"
           >
             <Button.Icon icon={FaLock} />
@@ -33,18 +33,16 @@ const Footer: React.FC = () => {
           rel="noopener noreferrer"
         >
           <Button.Root
-            className="transition-all shadow-sm hover:scale-105"
             title="GitHub Repository"
+            className="shadow-sm transition-all hover:scale-105"
             aria-label="GitHub Repository"
           >
             <Button.Icon icon={FaGithub} />
-            <Button.Text className="hidden sm:block">
-              GitHub Repository
-            </Button.Text>
+            <Button.Text className="hidden sm:block">GitHub Repository</Button.Text>
           </Button.Root>
         </a>
       </div>
-      <div className="flex flex-col items-center md:items-end w-auto text-zinc-600">
+      <div className="flex w-auto flex-col items-center text-zinc-600 md:items-end">
         <span className="flex items-center justify-center gap-1.5">
           <p>Powered by</p>
           <FaReddit aria-hidden="true" />

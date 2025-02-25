@@ -17,3 +17,24 @@
     border-color: var(--color-gray-200, currentColor);
   }
 }
+
+@layer utilities {
+  ::-webkit-scrollbar {
+    width: 0.4rem;
+    height: 0.4rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 3rem;
+    background: #353535;
+  }
+
+ ::-webkit-scrollbar-thumb {
+    background: #555555;
+    border-radius: 3rem;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    cursor: pointer;
+  }
+}

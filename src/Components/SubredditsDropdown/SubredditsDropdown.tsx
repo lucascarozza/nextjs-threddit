@@ -15,39 +15,39 @@ const SubredditsDropdown: React.FC = () => {
 
       <DropdownMenu.Portal>
 
-        <DropdownMenu.Content align="start">
-          <div className="flex flex-col gap-1 mt-2 p-2 w-64 bg-zinc-800 rounded-3xl shadow-sm">
+        <DropdownMenu.Content align="start" className="z-50" >
+          <div className="mt-2 p-2 w-64 border border-zinc-700 bg-zinc-800 rounded-3xl shadow-sm">
 
             <DropdownMenu.Item>
-              <Button.Root className="justify-start w-full">
+              <Button.Root className="justify-start w-full border-none">
                 <Button.Icon icon={FaUserCircle} className="text-3xl" />
-                <Button.Text>r/Cats</Button.Text>
+                <Button.Text >r/Cats</Button.Text>
               </Button.Root>
             </DropdownMenu.Item>
 
             <DropdownMenu.Item>
-              <Button.Root className="justify-start w-full">
+              <Button.Root className="justify-start w-full border-none">
                 <Button.Icon icon={FaUserCircle} className="text-3xl" />
                 <Button.Text>r/Memes</Button.Text>
               </Button.Root>
             </DropdownMenu.Item>
 
             <DropdownMenu.Item>
-              <Button.Root className="justify-start w-full">
+              <Button.Root className="justify-start w-full border-none">
                 <Button.Icon icon={FaUserCircle} className="text-3xl" />
                 <Button.Text>r/News</Button.Text>
               </Button.Root>
             </DropdownMenu.Item>
 
             <DropdownMenu.Item>
-              <Button.Root className="justify-start w-full">
+              <Button.Root className="justify-start w-full border-none">
                 <Button.Icon icon={FaUserCircle} className="text-3xl" />
                 <Button.Text>r/Games</Button.Text>
               </Button.Root>
             </DropdownMenu.Item>
 
             <DropdownMenu.Item>
-              <Button.Root className="justify-start w-full">
+              <Button.Root className="justify-start w-full border-none">
                 <Button.Icon icon={FaUserCircle} className="text-3xl" />
                 <Button.Text>r/Movies</Button.Text>
               </Button.Root>
