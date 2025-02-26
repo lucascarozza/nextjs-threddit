@@ -7,8 +7,11 @@ import {
   FaReddit,
 } from "react-icons/fa";
 import { Button } from "../Button/Button";
+import { changelog } from "@/app/version/changelog";
 
 const Footer: React.FC = () => {
+  const latestVersion = changelog[0];
+
   return (
     <footer className="flex h-50 flex-col items-center justify-center gap-6 md:gap-4 px-4 md:h-30 md:flex-row md:justify-between lg:px-20">
       <div className="inline-flex items-center justify-center gap-2 text-zinc-500">
@@ -68,7 +71,12 @@ const Footer: React.FC = () => {
       <div className="flex w-auto flex-col items-center text-end text-zinc-600 md:items-end">
         <span className="flex items-center justify-center gap-1.5">
           <p>
-            <span>v1.0.0</span> | Powered by
+            <Link href={"/version"}>
+              <span className="underline transition-colors hover:text-zinc-500">
+                {latestVersion.version}
+              </span>
+            </Link>{" "}
+            | Powered by
           </p>
           <span className="flex items-center justify-center gap-1 transition-colors hover:text-orange-500">
             <FaReddit aria-hidden="true" />
