@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+import StoreProvider from "./StoreProvider";
+
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 
@@ -24,15 +26,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="w-full bg-zinc-900 text-zinc-50">
-        {/* Header */}
-        <Header />
+        <StoreProvider>
+          {/* Header */}
+          <Header />
 
-        {/* Content */}
-        <div className="relative top-20">
-          <main>{children}</main>
-          {/* Footer */}
-          <Footer />
-        </div>
+          {/* Content */}
+          <div className="relative top-20">
+            <main>{children}</main>
+            {/* Footer */}
+            <Footer />
+          </div>
+        </StoreProvider>
       </body>
     </html>
   );
