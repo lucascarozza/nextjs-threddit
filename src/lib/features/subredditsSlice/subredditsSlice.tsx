@@ -46,7 +46,7 @@ export const fetchSubreddits = createAsyncThunk(
 interface SubredditsState {
   subredditsList: Subreddit[];
   status: "idle" | "pending" | "success" | "failed";
-  error: true | false;
+  error: boolean;
 }
 
 const initialState: SubredditsState = {

@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import { processRedditPosts } from "@/utils/formatters";
+
 interface Post {
   id: string;
   subreddit: string;
@@ -11,7 +13,7 @@ interface Post {
   num_comments: number;
 }
 
-interface ResponseData {
+export interface ResponseData {
   data: {
     children: { data: Post }[];
   };
@@ -24,7 +26,7 @@ export const fetchPosts = createAsyncThunk(
     try {
       const response = await fetch(
         // Yes, this is hardcoded and will remain so
-        `https://www.reddit.com/r/${subreddit}.json`
+        `https://www.reddit.com/r/${subreddit}.json?limit=50`
       );
 
       if (!response.ok) {
@@ -33,16 +35,7 @@ export const fetchPosts = createAsyncThunk(
 
       const data: ResponseData = await response.json();
 
-      return data.data.children.map((post) => ({
-        id: post.data.id,
-        subreddit: post.data.subreddit,
-        title: post.data.title,
-        selftext: post.data.selftext || null,
-        created_utc: post.data.created_utc,
-        score: post.data.score,  
-        url_overridden_by_dest: post.data.url_overridden_by_dest || null,
-        num_comments: post.data.num_comments,    
-      }));
+      return processRedditPosts(data);
     } catch (error) {
       console.error("Error fetching subreddits: ", error);
       throw error;
@@ -57,7 +50,7 @@ export const fetchPostsFromSearchResults = createAsyncThunk(
     try {
       const response = await fetch(
         // Yes, this is hardcoded and will remain so
-        `https://www.reddit.com/search/.json?q=${term}`
+        `https://www.reddit.com/search/.json?q=${term}&limit=50`
       );
 
       if (!response.ok) {
@@ -66,16 +59,7 @@ export const fetchPostsFromSearchResults = createAsyncThunk(
 
       const data: ResponseData = await response.json();
 
-      return data.data.children.map((post) => ({
-        id: post.data.id,
-        subreddit: post.data.subreddit,
-        title: post.data.title,
-        selftext: post.data.selftext || null,
-        created_utc: post.data.created_utc,
-        score: post.data.score,
-        url_overridden_by_dest: post.data.url_overridden_by_dest || null,
-        num_comments: post.data.num_comments,
-      }));  
+      return processRedditPosts(data);
     } catch (error) {
       if (error instanceof Error) {
         console.error("Error fetching posts: ", error.message);
@@ -91,7 +75,7 @@ interface PostsState {
   postsList: Post[];
   currentSubreddit: string;
   status: "idle" | "pending" | "success" | "failed";
-  error: true | false; 
+  error: boolean;
 }
 
 const initialState: PostsState = {
@@ -99,7 +83,7 @@ const initialState: PostsState = {
   currentSubreddit: "popular",
   status: "idle",
   error: false,
-}
+};
 
 const postsSlice = createSlice({
   name: "posts",
@@ -107,10 +91,10 @@ const postsSlice = createSlice({
   reducers: {
     setCurrentSubreddit: (state, action: PayloadAction<string>) => {
       state.currentSubreddit = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
-    (builder)
+    builder
       .addCase(fetchPosts.pending, (state) => {
         state.status = "pending";
         state.error = false;
@@ -128,16 +112,19 @@ const postsSlice = createSlice({
         state.status = "pending";
         state.error = false;
       })
-      .addCase(fetchPostsFromSearchResults.fulfilled, (state, action: PayloadAction<Post[]>) => {
-        state.postsList = action.payload;
-        state.status = "success";
-        state.error = false;
-      })
+      .addCase(
+        fetchPostsFromSearchResults.fulfilled,
+        (state, action: PayloadAction<Post[]>) => {
+          state.postsList = action.payload;
+          state.status = "success";
+          state.error = false;
+        }
+      )
       .addCase(fetchPostsFromSearchResults.rejected, (state) => {
         state.status = "failed";
         state.error = true;
-      })
-  }
+      });
+  },
 });
 
 export const { setCurrentSubreddit } = postsSlice.actions;
