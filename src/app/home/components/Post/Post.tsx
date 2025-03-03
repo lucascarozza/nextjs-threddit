@@ -1,6 +1,9 @@
 import React from "react";
+import Markdown from "react-markdown";
 import { FaComment, FaHeart } from "react-icons/fa6";
 import { FaInfoCircle, FaLink, FaUserCircle } from "react-icons/fa";
+import remarkGfm from "remark-gfm";
+import { Pluggable } from 'unified';
 
 import { Button } from "@/components/Button/Button";
 import Card from "@/components/Card/Card";
@@ -62,14 +65,14 @@ const Post: React.FC<PostProps> = ({
       {/* Post Title */}
       <div>
         <h2 id={`post-title-${subreddit}`} className="text-3xl font-bold">
-          {title}
+          <Markdown>{title}</Markdown>
         </h2>
       </div>
 
       {/* Post Text */}
       {selftext && (
         <div className="text-lg">
-          <p>{selftext}</p>
+          <Markdown remarkPlugins={[remarkGfm as Pluggable]}>{selftext}</Markdown>
         </div>
       )}
 
