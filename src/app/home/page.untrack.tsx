@@ -44,6 +44,8 @@ const Home: React.FC = () => {
               score={post.score}
               url_overridden_by_dest={post.url_overridden_by_dest}
               num_comments={post.num_comments}
+              thumbnail={post.thumbnail}
+              permalink={post.permalink}
             />
           ))
         )}

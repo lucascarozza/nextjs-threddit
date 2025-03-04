@@ -1,11 +1,11 @@
 import React from "react";
 import Markdown from "react-markdown";
 import { FaComment, FaHeart } from "react-icons/fa6";
-import { FaInfoCircle, FaLink, FaUserCircle } from "react-icons/fa";
+import { FaInfoCircle, FaLink, FaReddit, FaUserCircle } from "react-icons/fa";
 import remarkGfm from "remark-gfm";
-import { Pluggable } from 'unified';
+import { Pluggable } from "unified";
+import Image from "next/image";
 
-import { Button } from "@/components/Button/Button";
 import Card from "@/components/Card/Card";
 import { formatNumber, formatTime, formatUrl } from "@/utils/formatters";
 import { setCurrentSubreddit } from "@/lib/features/postsSlice/postsSlice";
@@ -20,6 +20,8 @@ interface PostProps {
   score: number;
   url_overridden_by_dest: string | null;
   num_comments: number;
+  thumbnail: string;
+  permalink: string;
 }
 
 const Post: React.FC<PostProps> = ({
@@ -30,6 +32,8 @@ const Post: React.FC<PostProps> = ({
   score,
   url_overridden_by_dest,
   num_comments,
+  thumbnail,
+  permalink,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -39,12 +43,12 @@ const Post: React.FC<PostProps> = ({
 
   return (
     <Card
-      outerClassName="w-full md:w-196 min-h-32 cursor-default transition-all hover:scale-101"
+      outerClassName="w-full md:w-196 min-h-32 cursor-default md:transition-all md:hover:scale-101"
       innerClassName="p-6 gap-6"
       aria-labelledby={`post-title-${subreddit}`}
     >
       {/* Post Header */}
-      <div className="inline-flex items-center justify-between">
+      <div className="inline-flex items-center">
         <div className="inline-flex items-center gap-2">
           <FaUserCircle className="text-3xl" aria-hidden="true" />
           <p>
@@ -52,7 +56,7 @@ const Post: React.FC<PostProps> = ({
               type="button"
               title={`Go to r/${subreddit}`}
               onClick={() => handleClick(subreddit)}
-              className="hover:cursor-pointer hover:underline focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+              className="hover:cursor-pointer hover:underline focus:outline-none"
               aria-label={`View posts from subreddit ${subreddit}`}
             >
               r/{subreddit}
@@ -71,8 +75,10 @@ const Post: React.FC<PostProps> = ({
 
       {/* Post Text */}
       {selftext && (
-        <div className="text-lg">
-          <Markdown remarkPlugins={[remarkGfm as Pluggable]}>{selftext}</Markdown>
+        <div className="max-h-96 overflow-x-hidden overflow-y-auto text-lg">
+          <Markdown remarkPlugins={[remarkGfm as Pluggable]}>
+            {selftext}
+          </Markdown>
         </div>
       )}
 
@@ -95,25 +101,64 @@ const Post: React.FC<PostProps> = ({
             aria-label={`Open external link: ${formatUrl(
               url_overridden_by_dest
             )}`}
+            className="inline-flex bg-zinc-700 border-1 border-zinc-600 rounded-2xl overflow-hidden transition-all md:hover:scale-101 hover:bg-zinc-600"
           >
-            <Button.Root
+            {thumbnail.startsWith("https") && (
+              <Image
+                src={thumbnail}
+                width={50}
+                height={50}
+                quality={10}
+                alt=""
+                className="h-20 w-32"
+              />
+            )}
+            <button
+              role="button"
               title=""
               aria-label={`Open external link: ${formatUrl(
                 url_overridden_by_dest
               )}`}
-              className="self-start justify-start px-5 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+              className="px-4 py-2 min-w-fit inline-flex items-center justify-center gap-2 hover:cursor-pointer"
             >
-              <Button.Icon icon={FaLink} />
-              <Button.Text>{formatUrl(url_overridden_by_dest)}</Button.Text>
-            </Button.Root>
+              <FaLink />
+              {formatUrl(url_overridden_by_dest)}
+            </button>
           </a>
         </div>
       )}
 
-      {/* Post Actions */}
+      {/* Post Media */}
+      <div className="pb-1 inline-flex gap-2 overflow-x-auto">
+        <div className="shrink-0 h-72 w-72 bg-zinc-300 rounded-md shadow-sm hover:cursor-pointer" />
+        <div className="shrink-0 h-72 w-72 bg-zinc-300 rounded-md shadow-sm hover:cursor-pointer" />
+        <div className="shrink-0 h-72 w-72 bg-zinc-300 rounded-md shadow-sm hover:cursor-pointer" />
+        <div className="shrink-0 h-72 w-72 bg-zinc-300 rounded-md shadow-sm hover:cursor-pointer" />
+        <div className="shrink-0 h-72 w-72 bg-zinc-300 rounded-md shadow-sm hover:cursor-pointer" />
+        <div className="shrink-0 h-72 w-72 bg-zinc-300 rounded-md shadow-sm hover:cursor-pointer" />
+        <div className="shrink-0 h-72 w-72 bg-zinc-300 rounded-md shadow-sm hover:cursor-pointer" />
+      </div>
+
+      {/* Post Footer */}
       <div className="inline-flex items-center gap-2">
+        <a
+          href={`${permalink}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View original post. Open in new tab."
+        >
+          <button
+            role="button"
+            type="button"
+            className="text-2xl h-11 w-11 flex items-center justify-center shrink-0 rounded-full bg-orange-500 text-white transition-all hover:scale-110 hover:cursor-pointer"
+            aria-label={`View original post. Open in new tab.`}
+          >
+            <FaReddit aria-hidden="true" />
+          </button>
+        </a>
+
         <div
-          className="inline-flex items-center gap-1 rounded-full bg-zinc-700 px-4 py-2 text-zinc-400"
+          className="text-md px-4 py-2 h-11 w-auto inline-flex items-center shrink-0 gap-1 rounded-full bg-zinc-700 text-zinc-400"
           aria-label={`${formatNumber(score)} likes`}
         >
           <FaHeart aria-hidden="true" />
@@ -121,7 +166,7 @@ const Post: React.FC<PostProps> = ({
         </div>
 
         <div
-          className="inline-flex items-center gap-1 rounded-full bg-zinc-700 px-4 py-2 text-zinc-400"
+          className="text-md px-4 py-1 h-11 w-auto inline-flex items-center shrink-0 gap-1 rounded-full bg-zinc-700 text-zinc-400"
           aria-label={`${formatNumber(num_comments)} comments`}
         >
           <FaComment aria-hidden="true" />

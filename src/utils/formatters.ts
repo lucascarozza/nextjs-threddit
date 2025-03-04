@@ -35,7 +35,9 @@ export const shouldExcludeUrl = (url: string | null): boolean => {
     const parsed = new URL(url);
     return (
       parsed.hostname.endsWith(".redd.it") || 
-      parsed.pathname.includes("/gallery")
+      parsed.pathname.includes("/gallery") ||
+      parsed.hostname === "imgur.com" ||
+      parsed.hostname.endsWith(".imgur.com")
     );
   } catch {
     return false;
@@ -53,6 +55,8 @@ export const processRedditPosts = (data: ResponseData) => {
     score: post.data.score,
     url_overridden_by_dest: post.data.url_overridden_by_dest || null,
     num_comments: post.data.num_comments,
+    thumbnail: post.data.thumbnail,
+    permalink: "https://www.reddit.com" + post.data.permalink,
   }))
   .filter((post) => !shouldExcludeUrl(post.url_overridden_by_dest));
 };

@@ -11,6 +11,8 @@ interface Post {
   score: number;
   url_overridden_by_dest: string | null;
   num_comments: number;
+  thumbnail: string;
+  permalink: string;
 }
 
 export interface ResponseData {
