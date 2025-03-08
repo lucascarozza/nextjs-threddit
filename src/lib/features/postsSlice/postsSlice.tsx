@@ -1,18 +1,34 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { processRedditPosts } from "@/utils/formatters";
+import { MediaItem } from "@/utils/extractors";
 
-interface Post {
+interface Media {
+  reddit_video?: {
+    fallback_url: string;
+  };
+}
+
+interface MediaMetadataItem {
+  m: string;
+  id: string;
+}
+
+export interface Post {
   id: string;
   subreddit: string;
   title: string;
   selftext: string | null;
   created_utc: number;
   score: number;
-  url_overridden_by_dest: string | null;
   num_comments: number;
-  thumbnail: string;
   permalink: string;
+  
+  url: string;
+  media?: Media;
+  is_gallery?: boolean;
+  media_metadata?: Record<string, MediaMetadataItem>;
+  extractedMedia?: MediaItem[] | null;
 }
 
 export interface ResponseData {

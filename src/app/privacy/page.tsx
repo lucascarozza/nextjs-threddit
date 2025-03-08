@@ -10,7 +10,7 @@ const Privacy: React.FC = () => {
       >
         <div className="flex flex-col gap-3">
           <h2 className="text-3xl font-bold">Privacy Notice for Threddit</h2>
-          <p className="text-zinc-500 italic text-lg">Last updated: February 25, 2025</p>
+          <p className="text-zinc-500 italic text-lg">Last updated: March 8, 2025</p>
         </div>
 
         <div className="space-y-6 text-lg leading-relaxed mb-4">

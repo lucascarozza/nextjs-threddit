@@ -16,22 +16,18 @@ const PostHeader: React.FC<{ subreddit: string; created_utc: number }> = ({
   };
 
   return (
-    <div className="inline-flex items-center">
-      <div className="inline-flex items-center gap-2">
-        <FaUserCircle className="text-3xl" aria-hidden="true" />
-        <p>
-          <button
-            type="button"
-            title={`Go to r/${subreddit}`}
-            onClick={() => handleClick(subreddit)}
-            className="hover:cursor-pointer hover:underline focus:outline-none"
-            aria-label={`View posts from subreddit ${subreddit}`}
-          >
-            r/{subreddit}
-          </button>
-          <span className="text-zinc-500"> • {formatTime(created_utc)}</span>
-        </p>
-      </div>
+    <div className="inline-flex items-center gap-2">
+      <button
+        role="button"
+        type="button"
+        title={`Go to r/${subreddit}`}
+        onClick={() => handleClick(subreddit)}
+        className="inline-flex items-center gap-2 hover:cursor-pointer hover:underline focus:outline-none"
+      >
+        <FaUserCircle aria-hidden="true" className="text-3xl" />
+        r/{subreddit}
+      </button>
+      <span className="text-zinc-500"> • {formatTime(created_utc)}</span>
     </div>
   );
 };

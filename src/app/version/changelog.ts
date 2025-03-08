@@ -1,7 +1,7 @@
 export const changelog = [
   {
     version: "v1.0.0",
-    date: "Unreleased",
+    date: "March 8, 2025",
     features: [
       "App routing with Next.js App Router",
       "State management with Redux Toolkit",
@@ -9,7 +9,6 @@ export const changelog = [
       "Search functionality",
       "Popular subreddits feed",
       "Ability to change feeds",
-      "Fullscreen media viewer",
       "Popular subreddits list",
       "Release of privacy notice",
       "Release of help center",

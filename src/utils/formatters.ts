@@ -1,4 +1,5 @@
 import { ResponseData } from "@/lib/features/postsSlice/postsSlice";
+import { extractPostMedia } from "./extractors";
 
 // Format numbers
 export function formatNumber(num: number): string {
@@ -46,17 +47,29 @@ export const shouldExcludeUrl = (url: string | null): boolean => {
 
 // Format Reddit response data
 export const processRedditPosts = (data: ResponseData) => {
-  return data.data.children.map((post) => ({
-    id: post.data.id,
-    subreddit: post.data.subreddit,
-    title: post.data.title,
-    selftext: post.data.selftext || null,
-    created_utc: post.data.created_utc,
-    score: post.data.score,
-    url_overridden_by_dest: post.data.url_overridden_by_dest || null,
-    num_comments: post.data.num_comments,
-    thumbnail: post.data.thumbnail,
-    permalink: "https://www.reddit.com" + post.data.permalink,
-  }))
-  .filter((post) => !shouldExcludeUrl(post.url_overridden_by_dest));
+  return data.data.children
+    .map((post) => {
+      const basePost = {
+        id: post.data.id,
+        subreddit: post.data.subreddit,
+        title: post.data.title,
+        selftext: post.data.selftext || null,
+        created_utc: post.data.created_utc,
+        score: post.data.score,
+        num_comments: post.data.num_comments,
+        permalink: "https://www.reddit.com" + post.data.permalink,
+        
+        url: post.data.url,
+        media: post.data.media,
+        is_gallery: post.data.is_gallery,
+        media_metadata: post.data.media_metadata,
+      };
+      return {
+        ...basePost,
+        extractedMedia: extractPostMedia(basePost),
+      };
+    })
+    .filter((post) => {
+      return post.extractedMedia?.length;
+    });
 };

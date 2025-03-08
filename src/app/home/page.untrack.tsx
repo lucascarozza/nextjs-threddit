@@ -19,12 +19,12 @@ const Home: React.FC = () => {
   return (
     <main>
       <section
-        className="min-h-146 flex flex-col items-center gap-6 pt-6 md:pt-10 px-4"
         aria-labelledby="posts-heading"
+        className="min-h-146 flex flex-col items-center gap-3 md:gap-6 pt-6 md:pt-10 px-4"
       >
-        <h1 id="posts-heading" className="sr-only">
-          Posts from {currentSubreddit}
-        </h1>
+        <span id="posts-heading" className="sr-only">
+          Posts from r/{currentSubreddit}
+        </span>
 
         {status === "pending" ? (
           <Status aria-label="Loading posts" />
@@ -42,10 +42,9 @@ const Home: React.FC = () => {
               selftext={post.selftext}
               created_utc={post.created_utc}
               score={post.score}
-              url_overridden_by_dest={post.url_overridden_by_dest}
               num_comments={post.num_comments}
-              thumbnail={post.thumbnail}
               permalink={post.permalink}
+              extractedMedia={post.extractedMedia}
             />
           ))
         )}
